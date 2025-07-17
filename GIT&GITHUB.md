@@ -10,13 +10,25 @@ GIT & GITHUB에 관하여
 
 ## 1.2. GITHUB란?
 온라인 백업, 공유, 협업(온라인 코드 저장소)
-### 1.2.1. 장점
-	1. 간결하다.
-	2. 별도의 도구없이 작성가능하다.
-	3. 다양한 형태로 변환이 가능하다.
-	4. 텍스트(Text)로 저장되기 때문에 용량이 적어 보관이 용이하다.
-	5. 텍스트파일이기 때문에 버전관리시스템을 이용하여 변경이력을 관리할 수 있다.
-	6. 지원하는 프로그램과 플랫폼이 다양하다.
+# 2. linux 기본 명령어
+1. pwd: print working directory. 현재 내가 작업하는 폴더를 보여달라는 뜻
+2. ls: list. 현재 경로 내의 폴더와 파일 내역을 보여달라는 뜻
+3. ls -a: list all. 숨겨진 파일도 모두 보여달라는 뜻
+4. cd 폴더명: change directory. 해당 디렉토리로 이동하라는 뜻
+5. ..: 한 단계 위의 폴더라는 뜻
+ 
+# 3. GIT 필수 명렁어 list
+1. git init
+2. git add
+3. git commit
+4. git status
+5. git log
+6. git push
+7. git clone
+8. git pull
+9. git branch
+10. git checkout
+11. git merge
 
 ### 1.2.2. 단점
 	1. 표준이 없다.
