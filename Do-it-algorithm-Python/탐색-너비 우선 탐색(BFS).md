@@ -42,5 +42,12 @@ T는 이미 방문했다는 것을 나타내요.
 
 <img width="1104" height="407" alt="image" src="https://github.com/user-attachments/assets/e7d8f965-a4aa-48d6-93ef-a4c955716294" />
 
-***코드 구현 해보기!***
+***코드 구현 해보기!***  
 
+관련 문제:  
+
+<https://www.acmicpc.net/problem/1260>  
+
+<https://www.acmicpc.net/problem/2178>  
+
+<https://www.acmicpc.net/problem/1967>
