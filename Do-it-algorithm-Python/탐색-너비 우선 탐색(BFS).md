@@ -46,8 +46,8 @@ T는 이미 방문했다는 것을 나타내요.
 
 관련 문제:  
 
-<https://www.acmicpc.net/problem/1260>  
+<https://www.acmicpc.net/problem/1260> 실버 2  
 
-<https://www.acmicpc.net/problem/2178>  
+<https://www.acmicpc.net/problem/2178> 실버 1  
 
-<https://www.acmicpc.net/problem/1967>
+<https://www.acmicpc.net/problem/1167> 골드 2
