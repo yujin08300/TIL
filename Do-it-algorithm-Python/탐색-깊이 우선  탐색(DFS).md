@@ -73,10 +73,10 @@ O(V+E)
 
 관련 문제:   
 
-<https://www.acmicpc.net/problem/11724>  
+<https://www.acmicpc.net/problem/11724> 실버 2  
 
-<https://www.acmicpc.net/problem/2023>  
+<https://www.acmicpc.net/problem/2023> 골드 5  
 
-<https://www.acmicpc.net/problem/4195>
+<https://www.acmicpc.net/problem/13023> 골드 5
 
 
