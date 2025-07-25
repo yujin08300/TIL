@@ -69,4 +69,14 @@ O(V+E)
 
 1->2->3까지 깊이 탐색 했다가 나오면서 4탐색, 5탐색
 
-***코드 구현 해보기!***
+***코드 구현 해보기!***  
+
+관련 문제:   
+
+<https://www.acmicpc.net/problem/11724>  
+
+<https://www.acmicpc.net/problem/2023>  
+
+<https://www.acmicpc.net/problem/4195>
+
+
