@@ -52,9 +52,12 @@ O(V+E)
 <img width="1003" height="404" alt="image" src="https://github.com/user-attachments/assets/d9a4a20e-f3ac-4562-af0d-4aa4826df682" />
 
 
+
 대상 노드의 인접 노드를 스택에 삽입하는 과정에서 이미 다녀간 노드(2, 3)인지 확인해야
 
 해요. 이미 다녀간 노드는 재삽입하지 않는 것이 핵심이에요. 
+
+삽입하기 전에 방문 여부를 체크하고 삽입한 후에 방문 배열에 T, F를 써넣어요.  
 
 
 <img width="1342" height="486" alt="image" src="https://github.com/user-attachments/assets/ed30d141-a855-476c-a452-bd512cf01223" />
