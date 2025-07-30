@@ -76,7 +76,7 @@ O(V+E)
 
 관련 문제:   
 
-<https://www.acmicpc.net/problem/11724> 실버 2  
+<https://www.acmicpc.net/problem/11724> 실버 2  (Do-it-algorithm-Python/깊이 우선 탐색-실전문제-연결 요소의 개수.md)
 
 <https://www.acmicpc.net/problem/2023> 골드 5  
 
