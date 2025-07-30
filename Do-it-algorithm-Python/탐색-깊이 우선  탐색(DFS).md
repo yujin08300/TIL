@@ -75,7 +75,8 @@ O(V+E)
 ***코드 구현 해보기!***  
 
 관련 문제:   
-[링크 텍스트](./깊이 우선 탐색-실전문제-연결 요소의 개수-백준 11724/)
+
+[연결 요소의 개수](Do-it-algorithm-Python/깊이 우선 탐색-실전문제-연결 요소의 개수-백준 11724.md)
 <https://www.acmicpc.net/problem/11724> 실버 2  (Do-it-algorithm-Python/깊이 우선 탐색-실전문제-연결 요소의 개수.md)
 
 <https://www.acmicpc.net/problem/2023> 골드 5  
