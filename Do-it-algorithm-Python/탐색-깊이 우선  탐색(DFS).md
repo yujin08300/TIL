@@ -76,7 +76,7 @@ O(V+E)
 
 관련 문제:   
 
-[연결 요소의 개수](../Do-it-algorithm-Python/깊이 우선 탐색-실전문제-연결 요소의 개수-백준 11724.md)
+[연결 요소의 개수](https://github.com/yujin08300/TIL/blob/main/Do-it-algorithm-Python/%EA%B9%8A%EC%9D%B4%20%EC%9A%B0%EC%84%A0%20%ED%83%90%EC%83%89-%EC%8B%A4%EC%A0%84%EB%AC%B8%EC%A0%9C-%EC%97%B0%EA%B2%B0%20%EC%9A%94%EC%86%8C%EC%9D%98%20%EA%B0%9C%EC%88%98-%EB%B0%B1%EC%A4%80%2011724.md))
 <https://www.acmicpc.net/problem/11724> 실버 2  (Do-it-algorithm-Python/깊이 우선 탐색-실전문제-연결 요소의 개수.md)
 
 <https://www.acmicpc.net/problem/2023> 골드 5  
