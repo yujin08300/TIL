@@ -122,5 +122,5 @@ Exclusive Area (EA):
 
 Inter-Runnable Variable (IRV):  
 단일 변수에 대한 접근을 RTE가 제공하는 안전한 전용 읽기/쓰기 함수로만 제한합니다.   
-
+****
 RTE의 부가적인 기능 Multiple Instantiation: 붕어빵. 하나의 붕어빵틀로 수많은 붕어빵을 계속해서 찍어냄
