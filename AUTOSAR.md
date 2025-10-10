@@ -35,7 +35,7 @@ AUTOSAR는 애플리케이션(SWC) → 가상 통신망(RTE) → 표준 서비�
 <img width="1245" height="660" alt="image" src="https://github.com/user-attachments/assets/a816ede3-99f4-4946-bfb4-a072a34fa815" />
 
 ## 2-1. AUTOSAR Application
--
+
 ECU들에는 component들이 존재하고, 각 component들 안에는 실제 기능을 구현하기 위한 러너블들이 존재. 러너블들은 어떤 트리거 이벤트에 의해 트리거되어 실행됨.  
 
 주기 이벤트 혹은 초기화 이벤트, 데이터 수신 이벤트 등 트리거 조건들을 설정할 수 있음. 또한, 트리거된 러너블들이 실행될 때는 OS Task에 매핑되어 동작함.  
@@ -87,4 +87,12 @@ ECU 내부, 외부 통신을 담당하는 미들웨어
 
 - 보호막 역할: 애플리케이션이 OS나 하드웨어 제어 SW에 직접 접근하는 것을 막아주는 안전장치입니다.
 
-  SWC끼리 커뮤니케이션 필요할 때는 SWC가 RTE에게 요청. RTE는 SWC간의 커뮤니케이션, SWC와 BSW끼리의 커뮤니케이션 제공
+  SWC끼리 커뮤니케이션 필요할 때는 SWC가 RTE에게 요청. RTE는 SWC간의 커뮤니케이션(목적: 데이터 교환), SWC와 BSW끼리의 커뮤니케이션(BSW에게 서비스 요청) 제공
+
+- AUTOSAR (전체 설계도):
+
+  - Application Layer (앱)
+
+  - RTE (중간 관리자)
+
+  - BSW (기반 소프트웨어)
