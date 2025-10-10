@@ -1,6 +1,6 @@
 AUTOSAR
 ==
-#1. autosar란?
+#1 autosar란?
 
 AUTOSAR(AUTomotive Open System ARchitecture)는 자동차 소프트웨어 개발의 표준화를 위해 만들어진 개방형 아키텍처입니다.
 
