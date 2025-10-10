@@ -98,11 +98,20 @@ ECU 내부, 외부 통신을 담당하는 미들웨어
   - BSW (기반 소프트웨어)
 
 RTE가 외부 통신이 필요한지 판단하는 기준은 데이터 매핑 설정 정보를 기준으로 판단.  
-
+****
 Sender/Receiver communication
 - direct(explicit): "지금 값 줘"라고 직접 요청해서 즉시 받는 1:1 통신.  
 - buffered(implicit): 최신 값 하나만 자동으로 덮어쓰며 유지되는 방식 (이전 값은 무시됨).   
 - queued: 모든 데이터를 순서대로 차곡차곡 쌓아놓고 하나씩 처리하는 방식 (데이터 손실 없음).
+****
+Client/Server communication  
+
+클라이언트 (손님): 서버에게 특정 작업을 해달라고 요청합니다.  
+서버 (요리사): 요청받은 작업을 수행하고 결과를 돌려줍니다.  
+
+호출 방식:
+- 동기 (Synchronous): 요청 후 결과가 올 때까지 기다립니다.
+- 비동기 (Asynchronous): 요청만 하고 기다리지 않고 바로 다음 일을 합니다.
 ****
 **문제**: 경합 상태 (Race Condition)  
 여러 기능(러너블)이 하나의 공유 변수에 동시 접근 시, 실행 순서에 따라 데이터가 오염되는 문제.  
@@ -113,3 +122,5 @@ Exclusive Area (EA):
 
 Inter-Runnable Variable (IRV):  
 단일 변수에 대한 접근을 RTE가 제공하는 안전한 전용 읽기/쓰기 함수로만 제한합니다.   
+
+RTE의 부가적인 기능 Multiple Instantiation: 붕어빵. 하나의 붕어빵틀로 수많은 붕어빵을 계속해서 찍어냄
