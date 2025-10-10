@@ -1,6 +1,6 @@
 AUTOSAR
 ==
-autosar란?
+1. autosar란?
 -
 AUTOSAR(AUTomotive Open System ARchitecture)는 자동차 소프트웨어 개발의 표준화를 위해 만들어진 개방형 아키텍처입니다.
 
@@ -26,15 +26,15 @@ AUTOSAR는 애플리케이션(SWC) → 가상 통신망(RTE) → 표준 서비�
 
 그래서 특정 하드웨어가 바뀌면 그 하드웨어와 직접 대화하는 맨 아래 계층(MCAL)만 교체해주면, 그 위에 있는 모든 소프트웨어는 코드 수정 없이 그대로 재사용할 수 있게 됩니다.  
 
-autosar의 layer
---
+2. autosar의 layer
+==
 
 <img width="1214" height="619" alt="image" src="https://github.com/user-attachments/assets/4ba16b99-6eeb-4d71-99e4-94191b03f1cf" />
 
 
 <img width="1245" height="660" alt="image" src="https://github.com/user-attachments/assets/a816ede3-99f4-4946-bfb4-a072a34fa815" />
 
-applicatioin을 구성하는 요소들
+AUTOSAR Application
 -
 ECU들에는 component들이 존재하고, 각 component들 안에는 실제 기능을 구현하기 위한 러너블들이 존재. 러너블들은 어떤 트리거 이벤트에 의해 트리거되어 실행됨.  
 
@@ -75,4 +75,6 @@ ECU들에는 component들이 존재하고, 각 component들 안에는 실제 기
 
 이러한 구조 덕분에 개발자는 하드웨어의 복잡한 구조나 통신 방식은 신경 끄고, 오직 소프트웨어의 기능 로직 개발에만 집중할 수 있게 됩니다.
 
+AUTOSAR RTE
+--
 
