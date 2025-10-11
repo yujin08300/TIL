@@ -301,4 +301,12 @@ IO를 제어하기 위해 다양한 하드웨어 드라이버 모듈을 제공.
 ### 2-3-10. OS
 static operationg system. 태스크나 우선순위, 자원 등이 툴 설정을 기반으로 하여 런타임 도중 태스크를 추가하거나 삭제하지 않음.  
 
-task, event, alarm, interrupt등이 구성요소. 
+task, event, alarm, interrupt등이 구성요소.
+
+## 2-4. AUTOSAR 개발 툴
+- 아키텍쳐를 설계하는 툴
+Prevision: 소프트웨어 컴포넌트에 대한 설계, 네트워크 설계, 와이어링 하네스에 대한 설계까지 가능.
+Virtual target pro: 가상의 환경에서 ECU 구성 SWC 실행시켜 문제가 없는지 찾아내 시뮬레이션.
+다빈치 디벨로퍼: 소프트웨어 컴포넌트의 내부 동작 정의하거나 SWC의 커뮤니케이션에 필요한 인터페이스 정의. ECU SWC를 설계할 때 사용.
+다빈치 configurator pro: 주요 역할은 ECU의 기반 소프트웨어(BSW)와 RTE를 설정하고, 그 설정값에 맞는 코드를 자동으로 생성하는 것입니다.
+CANoe.AMD: 별도의 툴이 아님. CANoe를 이용해 실시간으로 ECU내부 상태를 모니터링. 
