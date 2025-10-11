@@ -100,12 +100,13 @@ ECU 내부, 외부 통신을 담당하는 미들웨어
 
 ## 2-2-2. RTE를 이용한 커뮤니케이션: Sender/Receiver, client/Server communication
 <img width="313" height="334" alt="image" src="https://github.com/user-attachments/assets/2b264187-d32d-4926-b66d-018ac713ba6f" />
+
 RTE가 외부 통신이 필요한지 판단하는 기준은 데이터 매핑 설정 정보를 기준으로 판단.  
 ****
-Sender/Receiver communication
-- direct(explicit): "지금 값 줘"라고 직접 요청해서 즉시 받는 1:1 통신.  
-- buffered(implicit): 최신 값 하나만 자동으로 덮어쓰며 유지되는 방식 (이전 값은 무시됨).   
-- queued: 모든 데이터를 순서대로 차곡차곡 쌓아놓고 하나씩 처리하는 방식 (데이터 손실 없음).
+Sender/Receiver communication  
+- direct(explicit): "지금 값 줘"라고 직접 요청해서 즉시 받는 1:1 통신.    
+- buffered(implicit): 최신 값 하나만 자동으로 덮어쓰며 유지되는 방식 (이전 값은 무시됨).     
+- queued: 모든 데이터를 순서대로 차곡차곡 쌓아놓고 하나씩 처리하는 방식 (데이터 손실 없음).  
 ****
 Client/Server communication  
 
@@ -132,22 +133,172 @@ RTE의 부가적인 기능 Multiple Instantiation: 붕어빵. 하나의 붕어�
 Client/Server 포트, Sender/Receiver 포트가 autosar interface에 해당  
 user가 직접 인터페이스를 정의해야 하고, 실제로 코드를 구현할 때 코드 내에서 어떤 시점에 커뮤니케이션을 할지도 고려해야 함  
 
-1. 애플리케이션 계층의 인터페이스 (Application ↔ RTE)
-목적: 애플리케이션(SWC)들이 서로 통신하고, 하드웨어를 간접적으로 제어하기 위함입니다.
+1. AUTOSAR Interface (일반 포트)
+목적: 애플리케이션(SWC)끼리 서로 데이터를 주고받거나 기능을 호출하기 위해 사용합니다. 가장 일반적인 소통 방식입니다.
 
 특징:
 
-포트(Port) 기반으로 통신 대상을 명확히 지정합니다.
+Port 기반: 통신 대상을 명확히 지정하기 위해 포트(Port)를 사용합니다.
 
-물리적인 하드웨어는 센서/액추에이터 SWC라는 소프트웨어로 한번 감싸서 표현합니다.
+RTE 함수 사용: Rte_Write, Rte_Read, Rte_Call 등 RTE가 제공하는 표준 함수를 통해 통신합니다.
 
-애플리케이션은 RTE가 제공하는 Rte_Write (데이터 전달), Rte_Call (기능 요청) 함수만 사용합니다.
-
-2. BSW 계층의 인터페이스 (RTE ↔ BSW)
-목적: RTE가 애플리케이션의 요청을 받아 OS, 통신 등 기반 소프트웨어(BSW)의 기능을 사용하기 위함입니다.
+2. Standardized Interface (BSW 내부 API)
+목적: RTE가 BSW(OS, 통신 드라이버 등)의 내부 기능을 직접 제어하기 위해 사용합니다. 시스템의 기반을 다루는 내부 규칙입니다.
 
 특징:
 
-포트가 아닌 단순 C언어 함수(API) 호출 방식입니다. (예: Com_SendSignal())
+직접 함수 호출: 포트가 아닌 Com_SendSignal 같은 표준 C언어 함수(API)를 직접 호출합니다.
 
-애플리케이션은 이 함수를 절대 직접 호출할 수 없으며, 반드시 RTE를 통해서만 BSW 기능에 접근할 수 있습니다.
+애플리케이션 접근 불가: 앱 개발자는 이 인터페이스에 절대 직접 접근할 수 없으며, RTE만 사용할 수 있습니다.
+
+3. Standardized AUTOSAR Interface (서비스 포트)
+목적: 애플리케이션(SWC)이 AUTOSAR 표준으로 미리 정해진 BSW의 공용 서비스(진단, 메모리 관리 등)를 사용하기 위해 사용합니다.
+
+특징:
+
+서비스 포트 사용: BSW의 표준 서비스를 호출하기 위한 전용 포트인 '서비스 포트'를 사용합니다.
+
+앱 친화적: 애플리케이션 입장에서는 마치 다른 SWC의 기능을 호출하는 것처럼, 동일하게 Rte_Call 함수를 사용하여 BSW의 고급 기능을 쓸 수 있습니다.
+
+****
+  
+<img width="728" height="307" alt="image" src="https://github.com/user-attachments/assets/681c39ae-942a-4309-b201-aaf26fd09132" />
+
+****
+SWC (소프트웨어 컴포넌트) = 부서장 (Manager)   
+BSW (기반 소프트웨어) = 실무 직원 (Employee)   
+RTE = 개인 비서 (Assistant)
+
+## 2-3. AUTOSAR BSW
+<img width="920" height="511" alt="image" src="https://github.com/user-attachments/assets/58253d61-eb02-4a81-8e4b-1ce6ca5429e5" />
+
+### 2-3-1. Service Layer
+진단, 메모리, 워치독, 커뮤니케이션 등의 기능들 제공하는 레이어.  
+
+### 2-3-2. ECU Abstraction Layer
+제어기를 추상화하는 레이어. 하드웨어 의존적인 코드와 상위 소프트웨어를 분리시켜 줌. 상위 계층의 소프트웨어가 ECU하드웨어에 의존하지 않도록 만들어줌.  
+
+MCU를 제외한 주변 하드웨어, 칩, 드라이버 등이 이에 해당함.  
+
+### 2-3-3. Microcontroller abstraction layer
+상위계층을 마이크로컨트롤러로부터 독립적인 개발환경으로 만들어줌.  
+
+### 2-3-4. Complex Device Drivers
+보통 CDD라고 표현하며, 일반적인 어플리케이션 SWC로 처리하기 어려운 복잡한 센서, 엑츄에이터를 제어하기 위해 사용하는 특수한 SWC를 의미.  
+
+BSW위치에 위치함. 
+
+### 2-3-5. Communication모듈
+<img width="205" height="470" alt="image" src="https://github.com/user-attachments/assets/56fad7e2-2067-4533-8174-4b6645b97144" />
+
+1. COM (Communication)
+역할: 데이터 포장 전문가 📦
+
+설명: 애플리케이션이 보내려는 '엔진 온도=95'와 같은 개별 정보(신호, Signal)들을 받습니다. 그리고 이 정보들을 **PDU(Protocol Data Unit)**라는 표준 규격의 '데이터 상자'에 담고 포장하는 역할을 합니다. 애플리케이션과 가장 가까이서 소통하는 창구입니다.
+
+2. PDU Router (PDUR)
+역할: 중앙 교통 관제소 🚦
+
+설명: COM이 포장한 데이터 상자(PDU)를 받아서, 이 상자를 어떤 도로(CAN, 이더넷 등)로 보낼지 결정하고 경로를 지정해 줍니다. 상자 안에 무엇이 들었는지는 신경 쓰지 않고, 오직 '어디로 보낼지'만 담당하는 핵심적인 길잡이입니다.
+
+3. Transport Protocol (TP)
+역할: 대형 화물 분할 담당 쪼개기
+
+설명: 한 번에 보내기엔 너무 큰 데이터 상자(PDU)가 들어왔을 때, 이를 전송 가능한 여러 개의 작은 조각으로 나누어 순서대로 보냅니다. 받는 쪽에서는 이 조각들을 다시 원래의 큰 상자로 재조립합니다. 주로 진단 데이터나 소프트웨어 업데이트처럼 용량이 큰 데이터를 보낼 때 필수적입니다.
+
+4. IPDU Multiplexer (IPDUMux) - (선택 사항)
+역할: 주소 절약을 위한 트릭 📮
+
+설명: 똑같은 주소(CAN ID)를 사용하지만, 상황에 따라 서로 다른 종류의 데이터 상자를 보내고 싶을 때 사용합니다. 상자 안의 특정 표시를 보고 "아, 이번엔 A 종류의 데이터구나" 하고 구분할 수 있게 해주는 특별 기능입니다.
+
+5. Interface
+역할: 특정 하드웨어에 종속되지 않도록 공통된 인터페이스를 상위계층에 제공하여 상위모듈은 하드웨어 종류를 몰라도 통신이 가능하게 만들어주면서  
+
+각 버스특성에 맞는 기능도 제공해주는 모듈.  
+
+하위에 드라이버 API를 호출해주는 역할.  
+
+6. Driver
+하드웨어를 직접 제어. 상위 모듈이 통신을 사용할 수 있도록 지원. CAN controller의 레지스터 직접 제어, 초기화, 버퍼 관리, 인터럽트 처리를 위한 IXR구현해야 함.
+
+7. Transceiver
+하드웨어 회로의 전기적 신호를 생성, 감지하여 DAC 변환
+
+****
+application이 RTE에게 데이터 송신을 요청하는 상황에서 ECU 외부로 송신해야 하는 경우 흐름. 
+-
+<img width="479" height="570" alt="image" src="https://github.com/user-attachments/assets/e1f1fa85-dbf3-425e-aa86-20bb4f5c6671" />
+
+송신:  
+어플리케이션에서 시그널 단위로 송신 요청을 하면 COM모듈은 시그널들을 모아 PDU 버퍼에 저장.  
+
+PDU는 PDU 라우터로 전달되어, 즉시 보내질 수도 있고 설정된 주기에 맞추어 보내질 수도 있음.  
+
+PDU는 각각의 아이디가 있어 구분될 수 있음. PDU라우터는 해당 PDU가 어떤 버스를 통해 송신되어야 하는지 판단해서 해당 버스의 인터페이스 모듈로 전달.  
+
+인터페이스 모듈은 어떤 신호를 사용해 송신할지.  
+
+CAN driver는 메시지 우선순위를 고려하여 가능한 빨리 메시지 전송. 
+
+수신:  
+수신처리는 인터럽트 또는 폴링 방식으로. 인터럽트 방식은 수신해야 할 메시지가 있으면 하드웨어가   
+
+상위계층에 알린후 처리. 폴링은 주기적으로 모니터링하면서 수신처리해야할 메시지가 있는지 확인.  
+
+외부 ECU에서 보낸 메시지는 can버스를 통해 전달되고, can컨트롤러가 인터럽트를 발생시켜 can드라이버가 수신된 메시지를 읽음.   
+
+데이터를 전달받은 can 인터페이스는 PDU라우터에게 전달하고, PDU라우터는 해당 메시지가 상위의 COM 모듈로 가야하는지 CAN TP로 가야하는지 판단.    
+
+만약 COM 모듈로 전달되면 COM 모듈은 PDU에서 시그널 추출. 최종적으로 RTE에서 시그널을 읽어감.    
+
+### 2-3-6. Mode Management 모듈
+
+<img width="468" height="503" alt="image" src="https://github.com/user-attachments/assets/85359e7f-f36d-4104-be03-4feac5d19727" />
+
+1. EcuM 모듈
+ECU의 전체적인 상태처리. 제어기의 시작과 끝을 관리.
+2. ComM 모듈
+통신상태 관리.
+3. NM 모듈(Network Management)
+통신을 위해 버스를 활성화시키거나 셧다운.
+4. bus state manager
+bus 통신 상태 관리.
+5. Basic software mode manager
+BSW의 유저가 설정한 규칙 기반으로 BSW의 동작 제어.
+
+### 2-3-7. Watchdog
+software가 정상적으로 실행되고 있는지 감시. 일반적으로 모니터링 대상이 정상적으로 동작하면, watch trigger가 주기적으로 발생하여  
+
+시스템이 정상적으로 수행되고 있음을 알림. 이상이 생기면 트리거 발생x. 시스템 리셋 유도하게 됨.   
+
+watchdog driver는 hardware watchdog을 제어. watchdog interface통해 명령을 받음. 
+
+### 2-3-8. Memory Services
+autosar를 적용하여 제어기를 개발하다보면 다양한 종류의 메모리를 사용해야 함. 어떤 종류의 메모리든 동일한 방식으로 접근하여 사용할 수 있도록 추상화된 구조 제공하는 역할.  
+
+인터널 메모리인지, 익스터널 메모리인지 위치에 상관없이 동일한 방법으로 접근하여 개발자가 편리하게 코드를 작성할 수 있도록 추상화. 유지 보수성 확대.  
+
+메모리 드라이버는 실제 하드웨어를 제어하기 위한 드라이버. MCU에 따라 다르게 구현됨. 하드웨어 종속적.  
+
+### 2-3-9. 진단 관련 모듈
+<img width="285" height="532" alt="image" src="https://github.com/user-attachments/assets/3b0b43f4-75d4-4473-8075-b1c348daf532" />
+
+DCM은 진단 통신 프로토콜 구현해놓은 모듈. 외부 진단 장비와 ECU간의 통신을 처리.  
+
+진단 요청에 대한 수신 및 응답처리, 서비스 ID에 따른 기능 수행, 세션 관리 등을 담당.  
+
+DEM은 error event, 즉 DTC를 관리하는 모듈.   
+
+FIM은 특정 진단 이벤트가 발생했을 때 사용. DEM으로부터 전달받은 event의 상태를 기반으로 기능의 실행 여부에 대한 명령 부여.  
+
+오류가 발생하면 오류 발생 당시 상태를 스냅샷으로 저장. 
+
+### 2-3-10. 하드웨어 관련 모듈
+autosar는 IO를 위한 주변장치가 MCU 내부에 존재하든 외부에 존재하든 추상화 제공. 센서나 액츄에이터, 즉 하드웨어 자체의 추상화가 아니라 IO신호에 대한 인터페이스를 제공.  
+
+IO를 제어하기 위해 다양한 하드웨어 드라이버 모듈을 제공. 
+
+### 2-3-10. OS
+static operationg system. 태스크나 우선순위, 자원 등이 툴 설정을 기반으로 하여 런타임 도중 태스크를 추가하거나 삭제하지 않음.  
+
+task, event, alarm, interrupt등이 구성요소. 
