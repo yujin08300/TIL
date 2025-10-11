@@ -76,7 +76,7 @@ ECU들에는 component들이 존재하고, 각 component들 안에는 실제 기
 이러한 구조 덕분에 개발자는 하드웨어의 복잡한 구조나 통신 방식은 신경 끄고, 오직 소프트웨어의 기능 로직 개발에만 집중할 수 있게 됩니다.
 
 ## 2-2. AUTOSAR RTE
-
+## 2-2-1. RTE의 기본 역할과 특
 <img width="933" height="566" alt="image" src="https://github.com/user-attachments/assets/795b0c4b-c0e1-450a-9c8c-30d11a153299" />
 
 ECU 내부, 외부 통신을 담당하는 미들웨어  
@@ -97,6 +97,9 @@ ECU 내부, 외부 통신을 담당하는 미들웨어
 
   - BSW (기반 소프트웨어)
 
+
+## 2-2-2. RTE를 이용한 커뮤니케이션: Sender/Receiver, client/Server communication
+<img width="313" height="334" alt="image" src="https://github.com/user-attachments/assets/2b264187-d32d-4926-b66d-018ac713ba6f" />
 RTE가 외부 통신이 필요한지 판단하는 기준은 데이터 매핑 설정 정보를 기준으로 판단.  
 ****
 Sender/Receiver communication
@@ -124,3 +127,27 @@ Inter-Runnable Variable (IRV):
 단일 변수에 대한 접근을 RTE가 제공하는 안전한 전용 읽기/쓰기 함수로만 제한합니다.   
 ****
 RTE의 부가적인 기능 Multiple Instantiation: 붕어빵. 하나의 붕어빵틀로 수많은 붕어빵을 계속해서 찍어냄
+
+# 2-2-3. AUTOSAR Interface
+Client/Server 포트, Sender/Receiver 포트가 autosar interface에 해당  
+user가 직접 인터페이스를 정의해야 하고, 실제로 코드를 구현할 때 코드 내에서 어떤 시점에 커뮤니케이션을 할지도 고려해야 함  
+
+1. 애플리케이션 계층의 인터페이스 (Application ↔ RTE)
+목적: 애플리케이션(SWC)들이 서로 통신하고, 하드웨어를 간접적으로 제어하기 위함입니다.
+
+특징:
+
+포트(Port) 기반으로 통신 대상을 명확히 지정합니다.
+
+물리적인 하드웨어는 센서/액추에이터 SWC라는 소프트웨어로 한번 감싸서 표현합니다.
+
+애플리케이션은 RTE가 제공하는 Rte_Write (데이터 전달), Rte_Call (기능 요청) 함수만 사용합니다.
+
+2. BSW 계층의 인터페이스 (RTE ↔ BSW)
+목적: RTE가 애플리케이션의 요청을 받아 OS, 통신 등 기반 소프트웨어(BSW)의 기능을 사용하기 위함입니다.
+
+특징:
+
+포트가 아닌 단순 C언어 함수(API) 호출 방식입니다. (예: Com_SendSignal())
+
+애플리케이션은 이 함수를 절대 직접 호출할 수 없으며, 반드시 RTE를 통해서만 BSW 기능에 접근할 수 있습니다.
